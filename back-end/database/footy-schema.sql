@@ -25,7 +25,7 @@ CREATE TABLE leagues (
   name VARCHAR(100) NOT NULL,
   type VARCHAR(10),
   logo TEXT, 
-  country_name VARCHAR(25)
+  country VARCHAR(25)
     REFERENCES countries ON DELETE CASCADE 
 );
 

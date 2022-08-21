@@ -21,4 +21,4 @@ if (process.env.NODE_ENV === "production") {
 
 db.connect();
 
-module.export = db;
+module.exports = db;

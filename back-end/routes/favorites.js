@@ -6,7 +6,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 
 const { BadRequestError } = require("../expressError");
-const { ensureAdmin } = require("../middleware/auth");
+const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
 const Favorite = require("../models/favorite");
 
 const favoriteNewSchema = require("../schemas/favoriteNew.json");
@@ -23,7 +23,8 @@ const router = new express.Router();
  * Authorization required: admin
  */
 
-router.post("/", ensureAdmin, async function (req, res, next) {
+router.post("/", ensureCorrectUserOrAdmin, async function (req, res, next) {
+  console.log(req.body);
   try {
     const validator = jsonschema.validate(req.body, favoriteNewSchema);
     if (!validator.valid) {
@@ -31,7 +32,9 @@ router.post("/", ensureAdmin, async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
-    const favorite = await Favorite.create(req.body);
+    const { username, favorite_id, type } = req.body;
+    const favorite = await Favorite.create(username, favorite_id, type);
+    // return res.status(201).json({ favorite });
     return res.status(201).json({ favorite });
   } catch (err) {
     return next(err);
@@ -45,7 +48,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
  * Authorization required: none
  */
 
-router.get("/:username/:type", async function (req, res, next) {
+router.get("/:username/:type", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
     const { username, type } = req.params;
     const favorites = await Favorite.findAll(username, type);
@@ -62,7 +65,7 @@ router.get("/:username/:type", async function (req, res, next) {
  * Authorization: admin
  */
 
-router.delete("/:username/:type/:favorite_id", ensureAdmin, async function (req, res, next) {
+router.delete("/:username/:type/:favorite_id", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
     const { username, favorite_id, type } = req.params;
     await Favorite.remove(username, favorite_id, type);

@@ -56,7 +56,9 @@ class User {
    **/
 
   static async register(
-      { username, password, email, timezone, isAdmin }) {
+      { username, password, email, continent, city, isAdmin }) {
+
+    // console.log({ username, password, email, continent, city, isAdmin });
     const duplicateCheck = await db.query(
           `SELECT username
            FROM users
@@ -69,6 +71,17 @@ class User {
     }
 
     const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
+
+    const resTz = await db.query(
+          `SELECT code 
+           FROM timezones 
+           WHERE continent = $1 AND city = $2`,
+        [continent, city]
+    );
+    const timezone = resTz.rows[0].code;
+    console.log("timezone", timezone);
+
+    // const timezone = `${continent}/${city}`
 
     const result = await db.query(
           `INSERT INTO users
@@ -85,7 +98,7 @@ class User {
           email,
           timezone, 
           isAdmin,
-        ],
+        ]
     );
 
     const user = result.rows[0];
@@ -143,7 +156,7 @@ class User {
    * all the fields; this only changes provided ones.
    *
    * Data can include:
-   *   { password, email, timezone, isAdmin }
+   *   { password, email, timezone }
    *
    * Returns { username, email, timezone, isAdmin }
    *

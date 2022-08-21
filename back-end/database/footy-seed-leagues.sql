@@ -1,4 +1,4 @@
-INSERT INTO leagues (id, name, type, logo, country_name) 
+INSERT INTO leagues (id, name, type, logo, country) 
 VALUES (4, 'Euro Championship', 'Cup', 'https://media.api-sports.io/football/leagues/4.png', 'World'), 
       (21, 'Confederations Cup', 'Cup', 'https://media.api-sports.io/football/leagues/21.png', 'World'), 
       (61, 'Ligue 1', 'League', 'https://media.api-sports.io/football/leagues/61.png', 'France'), 

@@ -4,6 +4,9 @@ import Homepage from "../homepage/Homepage";
 import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
+import Competition from "../items/Competition";
+import Leagues from "../items/Leagues";
+import Cups from "../__obsolete/Cups";
 
 /** Side-wide routes. 
  * 
@@ -13,13 +16,13 @@ import PrivateRoute from "./PrivateRoute";
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function Routes({ login, signup, id, season, setId, setSeason }) {
   console.debug(
       "Routes",
       `login=${typeof login}`,
       `register=${typeof register}`,
   );
-
+    
   return (
     <div className="pt-5">
       <Switch>
@@ -36,12 +39,16 @@ function Routes({ login, signup }) {
           <SignupForm signup={signup} />
         </Route>
 
-        <PrivateRoute exact path="/link-1">
-          <Link-1 />
+        <PrivateRoute exact path="/competitions">
+          <Competition season={season} league_id={id} setId={setId} setSeason={setSeason} />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/link-2">
-          <Link-2 />
+        <PrivateRoute exact path="/leagues">
+          <Leagues season={season} league_id={id} setId={setId} setSeason={setSeason} />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/cups">
+          <Cups season={season} cup_id={id} setId={setId} setSeason={setSeason} />
         </PrivateRoute>
 
         <PrivateRoute exact path="/link-3">

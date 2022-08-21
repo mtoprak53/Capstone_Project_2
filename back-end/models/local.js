@@ -6,7 +6,7 @@ const { BadRequestError, NotFoundError } = require("../expressError");
 
 /** Related functions for favorites. */
 
-class Favorite {
+class Local {
   /** Create a favorite (from data), update db, 
    * return new favorite league/team data.
    *
@@ -62,21 +62,83 @@ class Favorite {
   //   [username]
   //   );
 
-    static async findAll(username, type) {
-      const favsRes = await db.query(
-        `SELECT username, 
-                ${type}_id, 
-                ${type}s.name AS ${type}_name, 
-                ${type}s.country
-         FROM favorite_${type}s
-         JOIN ${type}s
-         ON ${type}s.id = ${type}_id
-         WHERE username = $1`,
-      [username]
-      );
+  static async findAll(username, type) {
+    const favsRes = await db.query(
+      `SELECT username, 
+              ${type}_id, 
+              ${type}s.name AS ${type}_name, 
+              ${type}s.country
+        FROM favorite_${type}s
+        JOIN ${type}s
+        ON ${type}s.id = ${type}_id
+        WHERE username = $1`,
+    [username]
+    );  
 
     // console.log(favsRes);
     return favsRes.rows;
+  }
+  
+
+  /** Find all favorites.
+   *
+   * Returns [{ username, name, description, numEmployees, logoUrl }, ...]
+   * */
+
+  // static async findAll(username, type) {
+  //   const favsRes = await db.query(
+  //     `SELECT username, ${type}_id 
+  //      FROM favorite_${type}s
+  //      WHERE username = $1`,
+  //   [username]
+  //   );
+
+  static async findCities(continent) {
+    const res = await db.query(
+      `SELECT city 
+       FROM timezones
+       WHERE continent = $1`,
+    [continent]
+    );
+
+    console.log(res.rows);
+    return res.rows;
+  }
+
+  static async getLeagueCountries() {
+    const res = await db.query(
+      `SELECT name, flag 
+       FROM countries`
+    );
+
+    console.log(res.rows);
+    return res.rows;
+  }
+
+  static async getCountrysLeagues(country) {
+    const res = await db.query(
+      `SELECT id, name, logo, type 
+       FROM leagues
+       WHERE country = $1`,
+    [country]
+    );
+
+    console.log(res.rows);
+    return res.rows;
+  }
+
+  static async getCupById(id) {
+    const res = await db.query(
+      `SELECT name, logo 
+       FROM leagues
+       WHERE id = $1`,
+    [id]
+    );
+
+    // console.log(res);
+    console.log(`local.js >> getCupById >> id: ${id}`);
+    console.log(res.rows[0]);
+    return res.rows[0];
   }
 
 
@@ -109,4 +171,4 @@ class Favorite {
 }
 
 
-module.exports = Favorite;
+module.exports = Local;

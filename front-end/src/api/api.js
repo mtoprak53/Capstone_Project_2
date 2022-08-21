@@ -41,6 +41,45 @@ class FootyApi {
     return res.user;
   }
 
+  static async getCities(continent) {
+    let res = await this.request(`locals/timezones/${continent}`);
+    return res.cities;
+  }
+
+  /** Get token for login from username, password. */
+
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
+  }
+
+  /** Signup for site. */
+
+  static async signup(data) {
+    let res = await this.request(`auth/register`, data, "post");
+    return res.token;
+  }
+
+  static async getLeagueCountries() {
+    let res = await this.request(`locals/countries`);
+    return res;
+  }
+
+  static async getCountrysLeagues(country) {
+    let res = await this.request(`locals/leagues/${country}`);
+    return res;
+  }
+
+  static async getCountrysCups(country) {
+    let res = await this.request(`locals/cups/${country}`);
+    return res;
+  }
+
+  static async getCupById(id) {
+    let res = await this.request(`locals/cups/id/${id}`);
+    return res;
+  }
+
 }
 
 export default FootyApi;

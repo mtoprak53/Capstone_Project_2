@@ -19,10 +19,15 @@
       "maxLength": 60,
       "format": "email"
     },
-    "timezone": {
+    "continent": {
       "type": "string",
-      "minLength": 6,
-      "maxLength": 60
+      "minLength": 3,
+      "maxLength": 30
+    },
+    "city": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 30
     }
   },
   "additionalProperties": false,
@@ -30,6 +35,7 @@
     "username",
     "password",
     "email",
-    "timezone"
+    "continent",
+    "city"
   ]
 }
