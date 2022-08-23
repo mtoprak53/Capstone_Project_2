@@ -129,7 +129,7 @@ class Local {
 
   static async getCupById(id) {
     const res = await db.query(
-      `SELECT name, logo 
+      `SELECT name, logo, country 
        FROM leagues
        WHERE id = $1`,
     [id]

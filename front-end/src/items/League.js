@@ -1,45 +1,11 @@
-import React, { useState } from "react";
-// import React, { useState, useEffect } from "react";
-import useAxios from "../hooks/useAxios";
+import React from "react";
 import "./Standings.css";
 
-const League = ({ season=2022, league_id=203 }) => {
-  console.log(
-    "League",
-    { league_id, season }
-  );
+const League = (props) => {
 
-  const [internalState, setInternalState] = useState(league_id);
-  const [previousValue, setPreviousValue] = useState();
-  // const [data, setData] = useState();
-
-  if (league_id !== previousValue) {
-    setInternalState(league_id);
-    setPreviousValue(league_id);
-  }
-
-  // const data = useAxios(`standings?season=${season}&league=${internalState}`);
-  // setData(useAxios(`standings?season=${internalState.season}&league=${internalState.league_id}`));
-  // setData(res);
-
-  // const callHook = () => useAxios(`standings?season=${internalState.season}&league=${internalState.league_id}`);
-
-  // useEffect(() => {
-  //   // callHook();
-  // }, []);
-
-  if (data.isLoading) return <div>Loading....</div>
-  if (data.error) return <div>Sorry, something went wrong :(</div>
-
-  const {
-    country, 
-    flag, 
-    logo, 
-    name,  
-    standings 
-  } = data.response.data.response[0].league;
-
-  console.log({ name });
+  const data = JSON.parse(props.data);
+  console.log("League");
+  const { season, country, flag, logo, name, standings } = data;
 
   return (
     <div>
