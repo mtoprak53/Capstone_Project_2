@@ -21,9 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# my stuff
-/src/__obsolete
-/src/__old_220717
-/src/_data
-/src/_images

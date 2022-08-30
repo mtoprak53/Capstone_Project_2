@@ -7,8 +7,8 @@ import CompetitionForm from "./CompetitionForm";
 import League from "./League";
 import Cup from "./Cup";
 import FootyApi from "../api/api";
-import "./Standings.css";
 import ls from "localstorage-ttl";
+import "./Standings.css";
 
 const Competition = () => {
 

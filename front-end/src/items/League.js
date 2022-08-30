@@ -1,5 +1,7 @@
 import React from "react";
-import "./Standings.css";
+import { Link } from "react-router-dom";
+// import Team from "./Team";
+import "./League.css";
 
 const League = (props) => {
 
@@ -8,12 +10,36 @@ const League = (props) => {
   const { season, country, flag, logo, name, standings } = data;
 
   return (
-    <div>
-      <div className="Standings">
+    <div className="League d-flex justify-content-center">
+      <div className="League-container mx-5">
 
-        <h1>League Standing</h1>
+        <h1 className="text-center">League Standing</h1>
 
-        <div className="Standings-header">
+
+        <div className="League-header-container container">
+
+          <div className="League-info-container row">
+            <div className="League-league col row d-flex align-items-center">
+              <div className="col-4"><img src={logo} alt="" /></div>
+              <div className="image-header d-flex align-items-center col">
+                <h2>{name}</h2>
+              </div>
+            </div>
+
+            <div className="League-country col row d-flex align-items-center">
+              <div className="image-header d-flex align-items-center justify-content-end col">
+                <h2 className="">{country}</h2>
+              </div>
+              <div className="col-4">
+                <img className="rounded-pill" src={flag} alt=""/>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+        {/* <div className="Standings-header">
           <div className="Standings-header-flag image-header">
             <img src={flag} alt=""/>
           </div>
@@ -26,7 +52,8 @@ const League = (props) => {
         </div>
         <div className="season">
           {season}/{+season+1}
-        </div>
+        </div> */}
+
 
         <table className="table">
           <thead>
@@ -48,10 +75,16 @@ const League = (props) => {
               team => (<tr key={team.rank}>
                 <th scope="row">{team.rank}</th>
                 <td>
-                  <div className="Standings-table-team-logo image-table">
-                    <img src={team.team.logo} alt=""  />
+                  <div className="League-table-team-logo mr-2">
+                    <img className="image-table" src={team.team.logo} alt=""  />
                   </div>
-                  <span className="team-name">{team.team.name}</span>
+                  <Link 
+                    to={{
+                      pathname: `/team/${team.team.name}`,
+                      // state: {flag: flag}
+                      state: { flag }
+                    }}
+                  ><span className="team-name">{team.team.name}</span></Link>
                 </td>
                 <td>{team.all.played}</td>
                 <td>{team.all.win}</td>

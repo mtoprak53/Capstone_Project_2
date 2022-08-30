@@ -38,6 +38,8 @@ function App() {
           // put the token on the Api class so it can use it to call the API.
           FootyApi.token = token;
           let currentUser = await FootyApi.getCurrentUser(username);
+          console.log(`currentUser >> `);
+          console.log(currentUser);
           setCurrentUser(currentUser);
         } catch (err) {
           console.error("App loadUserInfo: problem loading", err);

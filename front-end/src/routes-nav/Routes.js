@@ -5,8 +5,10 @@ import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 import PrivateRoute from "./PrivateRoute";
 import Competition from "../items/Competition";
-import Leagues from "../items/Leagues";
-import Cups from "../__obsolete/Cups";
+// import Leagues from "../items/Leagues";
+// import Cups from "../__obsolete/Cups";
+import CupRound from "../items/CupRound";
+import Team from "../items/Team";
 
 /** Side-wide routes. 
  * 
@@ -16,7 +18,7 @@ import Cups from "../__obsolete/Cups";
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup, id, season, setId, setSeason }) {
+function Routes({ login, signup, id, season, setId, setSeason, round }) {
   console.debug(
       "Routes",
       `login=${typeof login}`,
@@ -43,12 +45,20 @@ function Routes({ login, signup, id, season, setId, setSeason }) {
           <Competition season={season} league_id={id} setId={setId} setSeason={setSeason} />
         </PrivateRoute>
 
-        <PrivateRoute exact path="/leagues">
+        {/* <PrivateRoute exact path="/leagues">
           <Leagues season={season} league_id={id} setId={setId} setSeason={setSeason} />
         </PrivateRoute>
 
         <PrivateRoute exact path="/cups">
           <Cups season={season} cup_id={id} setId={setId} setSeason={setSeason} />
+        </PrivateRoute> */}
+
+        <PrivateRoute exact path="/cup-round">
+          <CupRound round={round} />
+        </PrivateRoute>
+
+        <PrivateRoute exact path="/team/:team_name">
+          <Team />
         </PrivateRoute>
 
         <PrivateRoute exact path="/link-3">

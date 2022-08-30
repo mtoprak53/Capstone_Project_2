@@ -1,0 +1,52 @@
+div, span, p, th, td {
+  /* border: 1px solid red; */
+}
+
+p {
+  /* margin: 0 auto; */
+}
+
+tr {
+  /* display: flex; */
+  /* height: 5rem; */
+}
+
+td {
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* text-align: center; */
+  
+}
+
+.League-container {
+  min-width: 600px;
+  max-width: 900px;
+}
+
+.League-league {
+  /* display: flex; */
+  /* justify-content: center; */
+}
+
+.fontsize_1_3_rem {
+  font-size: 1.3rem;
+}
+
+/* .image-header {
+  width: 65px;
+  height: 65px;
+  display: inline-block;
+} */
+
+.League-table-team-logo {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+}
+
+.image-table {
+  /* width: 15px; */
+  /* height: 15px; */
+  /* display: inline-block; */
+}
