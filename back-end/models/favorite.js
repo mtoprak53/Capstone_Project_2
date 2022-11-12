@@ -18,10 +18,8 @@ class Favorite {
    * */
 
   static async create(username, favorite_id, type) {
-    // const fav_id = `${db_name.slice(0, db_name.length-1)}_id`;
     const duplicateCheck = await db.query(
-          // `SELECT username, ${fav_id}
-          `SELECT username, ${type}_id
+          `SELECT username, ${type}_id AS "${type}Id"
            FROM favorite_${type}s
            WHERE username = $1 AND ${type}_id = $2`,
         [username, favorite_id]);
@@ -29,7 +27,7 @@ class Favorite {
     if (duplicateCheck.rows[0]) {
       const fav = await db.query(
             `SELECT name 
-             FROM ${type}s 
+             FROM ${type === "cup" ? "league" : type}s 
              WHERE id = $1`,
           [favorite_id]
       );
@@ -40,7 +38,7 @@ class Favorite {
           `INSERT INTO favorite_${type}s
            (username, ${type}_id)
            VALUES ($1, $2)
-           RETURNING username, ${type}_id`,
+           RETURNING username, ${type}_id AS "${type}Id"`,
         [username, favorite_id],
     );
     const newFav = result.rows[0];
@@ -49,33 +47,28 @@ class Favorite {
   }
   
 
-  /** Find all favorites.
+  /** Find all favorites of specified type.
    *
-   * Returns [{ username, name, description, numEmployees, logoUrl }, ...]
+   * Returns [{ username, id, name, country, flagUrl, logoUrl }, ...]
    * */
 
-  // static async findAll(username, type) {
-  //   const favsRes = await db.query(
-  //     `SELECT username, ${type}_id 
-  //      FROM favorite_${type}s
-  //      WHERE username = $1`,
-  //   [username]
-  //   );
-
     static async findAll(username, type) {
+      // console.log("**************************************/");
       const favsRes = await db.query(
         `SELECT username, 
-                ${type}_id, 
-                ${type}s.name AS ${type}_name, 
-                ${type}s.country
-         FROM favorite_${type}s
-         JOIN ${type}s
-         ON ${type}s.id = ${type}_id
+                ${type}_id AS "id", 
+                t.name AS "name", 
+                t.country AS "country",
+                t.logo_url AS "logoUrl",
+                c.flag_url AS "flagUrl"
+         FROM favorite_${type}s f
+         JOIN ${type === "cup" ? "league" : type}s t
+         ON t.id = ${type}_id
+         JOIN countries c
+         ON c.name = t.country
          WHERE username = $1`,
       [username]
       );
-
-    // console.log(favsRes);
     return favsRes.rows;
   }
 
@@ -90,14 +83,14 @@ class Favorite {
           `DELETE
            FROM favorite_${type}s
            WHERE username = $1 AND ${type}_id = $2
-           RETURNING username, ${type}_id`,
+           RETURNING username, ${type}_id AS "${type}Id"`,
         [username, favorite_id]);
     const favorite = result.rows[0];
 
     if (!favorite) {
       const fav = await db.query(
             `SELECT name 
-             FROM ${type}s 
+             FROM ${type === "cup" ? "league" : type}s 
              WHERE id = $1`,
           [favorite_id]
       );

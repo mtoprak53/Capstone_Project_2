@@ -42,7 +42,7 @@ function SignupForm({ signup }) {
     evt.preventDefault();
     let result = await signup(formData);
     if (result.success) {
-      history.push("/standings");
+      history.push("/");
     } else {
       setFormErrors(result.errors);
     }

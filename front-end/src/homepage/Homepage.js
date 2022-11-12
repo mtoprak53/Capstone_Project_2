@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Homepage.css";
 import UserContext from "../auth/userContext";
+import HomeLoggedIn from "./HomeLoggedIn";
 
 /** Homepage of site. 
  * 
@@ -22,9 +23,7 @@ function Homepage() {
           <h1 className="mb-4 font-weight-bold">Footy</h1>
           <p className="lead">All the games in one, convenient place.</p>
           {currentUser
-              ? <h2>
-                Welcome Back, {currentUser.username}!
-              </h2>
+              ? <HomeLoggedIn user={currentUser} />
               : (
                   <p>
                     <Link className="btn btn-primary font-weight-bold mr-3"

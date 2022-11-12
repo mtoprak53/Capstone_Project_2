@@ -19,23 +19,18 @@ function Navigation({ logout }) {
     return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/competitions">
-              Competitions
-            </NavLink>
-          </li>
-          <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/leagues">
+            <NavLink className="nav-link" to="/league">
               Leagues
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/cups">
+            <NavLink className="nav-link" to="/cup">
               Cups
             </NavLink>
           </li>
           <li className="nav-item mr-4">
-            <NavLink className="nav-link" to="/link-3">
-              Link-3
+            <NavLink className="nav-link" to="/teams">
+              Teams
             </NavLink>
           </li>
           <li className="nav-item">

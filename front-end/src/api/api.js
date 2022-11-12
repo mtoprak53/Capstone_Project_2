@@ -34,18 +34,6 @@ class FootyApi {
 
   // Individual API routes
 
-  /** Get the current user. */
-
-  static async getCurrentUser(username) {
-    let res = await this.request(`users/${username}`);
-    return res.user;
-  }
-
-  static async getCities(continent) {
-    let res = await this.request(`locals/timezones/${continent}`);
-    return res.cities;
-  }
-
   /** Get token for login from username, password. */
 
   static async login(data) {
@@ -60,8 +48,30 @@ class FootyApi {
     return res.token;
   }
 
+  /** Get the current user. */
+
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  static async saveTeam(data) {
+    let res = await this.request(`locals/team`, data, "post");
+    return res;
+  }
+
+  static async getCities(continent) {
+    let res = await this.request(`locals/timezones/${continent}`);
+    return res.cities;
+  }
+
   static async getLeagueCountries() {
     let res = await this.request(`locals/countries`);
+    return res;
+  }
+
+  static async getTeam(id) {
+    let res = await this.request(`locals/team/${id}`);
     return res;
   }
 
@@ -70,13 +80,30 @@ class FootyApi {
     return res;
   }
 
-  static async getCountrysCups(country) {
-    let res = await this.request(`locals/cups/${country}`);
+  // static async getCountrysCups(country) {
+  //   let res = await this.request(`locals/cups/${country}`);
+  //   return res;
+  // }
+
+  static async getCupById(id) {
+    let res = await this.request(`locals/cups/${id}`);
     return res;
   }
 
-  static async getCupById(id) {
-    let res = await this.request(`locals/cups/id/${id}`);
+  static async getFavorites(username) {
+    let leaguesRes = await this.request(`favorites/${username}/league`);
+    let cupsRes = await this.request(`favorites/${username}/cup`);
+    let teamsRes = await this.request(`favorites/${username}/team`);
+    return [leaguesRes, cupsRes, teamsRes];
+  }
+
+  static async addFavorite( username, type, favorite_id ) {
+    let res = await this.request(`favorites/${username}`, { type, favorite_id }, "post");
+    return res;
+  }
+
+  static async deleteFavorite(username, type, id) {
+    let res = await this.request(`favorites/${username}/${type}/${id}`, {}, "delete");
     return res;
   }
 

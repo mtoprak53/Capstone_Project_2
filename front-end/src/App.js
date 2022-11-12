@@ -7,6 +7,8 @@ import LoadingSpinner from "./common/LoadingSpinner";
 import FootyApi from "./api/api";
 import UserContext from "./auth/userContext";
 import jwt from "jsonwebtoken";
+// import { set } from "localstorage-ttl";
+// import { NavigationContainer } from '@react-navigation/native';
 
 // Key name for storing token in localStorage for "remember me" re-login
 export const TOKEN_STORAGE_ID = "footy-token";
@@ -16,6 +18,12 @@ function App() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
+  /** [{ name, flag }, ... ] */
+  const [countries, setCountries] = useState([]);
+  const [favoriteLeagues, setFavoriteLeagues] = useState([]);
+  const [favoriteCups, setFavoriteCups] = useState([]);
+  const [favoriteTeams, setFavoriteTeams] = useState([]);
+  // const [error, setError] = useState(null);
 
   console.debug(
       "App",
@@ -23,6 +31,23 @@ function App() {
       "currentUser=", currentUser,
       "token=", token,
   );
+
+
+  useEffect(function mountStuff() {
+    async function getCountries() {
+      try {
+        const res = await FootyApi.getLeagueCountries();
+        setCountries(countries => res);      
+        return res;
+      } catch (err) {
+        console.error(err);
+        // setError(err);
+      }
+    };
+
+    getCountries();
+  }, []);
+  
 
   // Load user info from API. Until a user is logged in and they have a token, 
   // this should not run. It only needs to re-run when a user logs out, so 
@@ -38,9 +63,19 @@ function App() {
           // put the token on the Api class so it can use it to call the API.
           FootyApi.token = token;
           let currentUser = await FootyApi.getCurrentUser(username);
+          let favs = await FootyApi.getFavorites(username);
           console.log(`currentUser >> `);
           console.log(currentUser);
+          console.log(`favoriteLeagues >> `);
+          console.log(favs[0]);
+          console.log(`favoriteCups >> `);
+          console.log(favs[1]);
+          console.log(`favoriteTeams >> `);
+          console.log(favs[2]);
           setCurrentUser(currentUser);
+          setFavoriteLeagues(favs[0].favorites);
+          setFavoriteCups(favs[1].favorites);
+          setFavoriteTeams(favs[2].favorites);
         } catch (err) {
           console.error("App loadUserInfo: problem loading", err);
           setCurrentUser(null);
@@ -55,6 +90,82 @@ function App() {
     setInfoLoaded(false);
     getCurrentUser();
   }, [token]);
+
+
+  async function getFavorites() {
+    if (token) {
+      try {
+        // let { username } = jwt.decode(token);
+        // put the token on the Api class so it can use it to call the API.
+        // FootyApi.token = token;
+        // let currentUser = await FootyApi.getCurrentUser(username);
+        let favs = await FootyApi.getFavorites(currentUser.username);
+        // console.log(`currentUser >> `);
+        // console.log(currentUser);
+        console.log(`favoriteLeagues >> `);
+        console.log(favs[0]);
+        console.log(`favoriteCups >> `);
+        console.log(favs[1]);
+        console.log(`favoriteTeams >> `);
+        console.log(favs[2]);
+        // setCurrentUser(currentUser);
+        setFavoriteLeagues(favs[0].favorites);
+        setFavoriteCups(favs[1].favorites);
+        setFavoriteTeams(favs[2].favorites);
+      } catch (err) {
+        console.error("App loadUserInfo: problem loading", err);
+        // setCurrentUser(null);
+      }
+    }
+    setInfoLoaded(true);
+  }
+
+  // set infoLoaded to false while async getCurrentUser runs; once the 
+  // data is fetched (or even if an error happens!), this will be set back 
+  // to false to control the spinner.
+
+
+  /** Handles favorite additions */
+  async function favorite(type, id) {
+    try {
+      await FootyApi.addFavorite(currentUser.username, type, id);
+      // if (type="league") {
+      //   setFavoriteLeagues(favoriteLeagues.filter(l => l.id !== id));
+      // } else {
+      //   setFavoriteTeams(favoriteTeams.filter(t => t.id !== id));
+      // }
+
+      setInfoLoaded(false);
+      getFavorites();
+
+      return { success: true };
+    } catch (errors) {
+      console.error("favorite addition failed", errors);
+      return { success: false, errors };
+    }
+  }
+
+
+  /** Handles favorite removals */
+  async function unfavorite(type, id) {
+    try {
+      await FootyApi.deleteFavorite(currentUser.username, type, id);
+      // if (type="league") {
+      //   setFavoriteLeagues(favoriteLeagues.filter(l => l.id !== id));
+      // } else {
+      //   setFavoriteTeams(favoriteTeams.filter(t => t.id !== id));
+      // }
+
+      setInfoLoaded(false);
+      getFavorites();
+
+      return { success: true };
+    } catch (errors) {
+      console.error("favorite deletion failed", errors);
+      return { success: false, errors };
+    }
+  }
+
 
   /** Handles site-wide logout. */
   function logout() {
@@ -97,9 +208,25 @@ function App() {
   if (!infoLoaded) return <LoadingSpinner />;
   
   return (
+    // <NavigationContainer
+    //   documentTitle={{
+    //     formatter: (options, route) =>
+    //       `${options?.title ?? route?.name} - My Cool App`,
+    //   }}
+    // >
+
       <BrowserRouter>
         <UserContext.Provider
-            value={{ currentUser, setCurrentUser }}>
+            value={{ 
+                currentUser, 
+                setCurrentUser, 
+                countries, 
+                favoriteLeagues, 
+                favoriteCups, 
+                favoriteTeams, 
+                favorite, 
+                unfavorite
+            }}>
           <div className="App">
             <Navigation logout={logout} />
             <Routes
@@ -109,7 +236,10 @@ function App() {
           </div>
         </UserContext.Provider>
       </BrowserRouter>
+
+    // </NavigationContainer>    
   );
 }
+
 
 export default App;

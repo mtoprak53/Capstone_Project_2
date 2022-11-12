@@ -1,4 +1,4 @@
-INSERT INTO countries (name, code, flag) 
+INSERT INTO countries (name, code, flag_url) 
 VALUES ('Albania', 'AL', 'https://media.api-sports.io/flags/al.svg'), 
       ('Algeria', 'DZ', 'https://media.api-sports.io/flags/dz.svg'), 
       ('Andorra', 'AD', 'https://media.api-sports.io/flags/ad.svg'), 

@@ -12,7 +12,6 @@ const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
 const favoritesRoutes = require("./routes/favorites");
 const localsRoutes = require("./routes/locals");
-// const xRoutes = require("./routes/x");
 
 const morgan = require("morgan");
 
@@ -27,7 +26,7 @@ app.use("/auth", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/favorites", favoritesRoutes);
 app.use("/locals", localsRoutes);
-// app.use("/x", xRoutes);
+
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
@@ -36,7 +35,16 @@ app.use(function (req, res, next) {
 
 /** Generic error handler; anything unhandled goes here */
 app.use(function (err, req, res, next) {
-  if (process.env.NODE_ENV !== "test") console.error(err.stack);
+  // if (process.env.NODE_ENV !== "test" &&
+  //     process.env.NODE_ENV !== "other") {
+  if (err.stack &&
+      process.env.NODE_ENV !== "test" &&
+      // process.env.NODE_ENV !== "" &&
+      process.env.NODE_ENV !== "other") {
+    console.log(process.env.NODE_ENV);
+    // console.log(NotFoundError());
+    console.error(err.stack);
+  }
   const status = err.status || 500;
   const message = err.message;
 

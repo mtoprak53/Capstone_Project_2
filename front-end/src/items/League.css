@@ -1,27 +1,19 @@
+
+/** BORDER SCAFFOLDING FOR DEVELOPEMENT */
 div, span, p, th, td {
   /* border: 1px solid red; */
 }
 
-p {
-  /* margin: 0 auto; */
-}
-
-tr {
-  /* display: flex; */
-  /* height: 5rem; */
-}
-
-td {
-  /* display: flex; */
-  /* justify-content: center; */
-  /* align-items: center; */
-  /* text-align: center; */
-  
-}
-
 .League-container {
-  min-width: 600px;
-  max-width: 900px;
+  /* min-width: 600px;
+  max-width: 900px; */
+}
+
+.League, .League-container {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .League-league {
@@ -50,3 +42,8 @@ td {
   /* height: 15px; */
   /* display: inline-block; */
 }
+
+.hidden {
+  display: none;
+}
+

@@ -1,0 +1,80 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/teamNew.schema.json",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 35
+    },
+    "code": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        },
+        {
+          "type": "null"
+        }        
+      ]
+    },
+    "country": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 25
+    },
+    "founded": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1800
+        },
+        {
+          "type": "null"
+        }        
+      ]
+    },
+    "national": {
+      "type": "boolean"
+    },
+    "logoUrl": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "uri"
+        },
+        {
+          "type": "null"
+        }        
+      ]
+    },
+    "venueId": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 1
+        },
+        {
+          "type": "null"
+        }        
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "code",
+    "country",
+    "founded",
+    "national",
+    "logoUrl",
+    "venueId"
+  ]
+}

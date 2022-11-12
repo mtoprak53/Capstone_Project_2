@@ -5,6 +5,13 @@ VALUES ('mete', 203),   -- TR Super Lig
        ('mete', 39),    -- GB Premier League
        ('mete', 140);   -- ES La Liga
 
+INSERT INTO favorite_cups (username, cup_id)
+VALUES ('mete', 206),   -- TR Turkiye Kupasi
+       ('mete', 1),     -- W World Cup
+       ('mete', 81),    -- DE DFB Pokal
+       ('mete', 45),    -- GB FA Cup
+       ('mete', 137);   -- IT Coppa Italia
+
 INSERT INTO favorite_teams (username, team_id)
 VALUES ('mete', 998),   -- TR Trabzonspor
        ('mete', 777),    -- TR Türkiye
