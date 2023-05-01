@@ -31,7 +31,11 @@ function Favorites({ favoriteArr, type }) {
             item => (
               <li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
                 <span className="">
-                  <Link to={{ pathname: `/${type}/${item.id}` + type === `team` ? `` : `/${defaultSeason}` }}>
+                  <Link to={{
+                    pathname: type === `team` ? 
+                              `/${type}s/${item.id}/` :
+                              `/${type}/${item.id}/${defaultSeason}`
+                  }}>
                     <div className="small-logo d-inline mr-3">
                       <img src={item.logoUrl} alt="item-logo" />
                     </div>

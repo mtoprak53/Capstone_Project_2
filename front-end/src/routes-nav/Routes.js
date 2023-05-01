@@ -81,6 +81,10 @@ function Routes({ login, signup }) {
           <Competition type="league" />
         </PrivateRoute>
 
+        {/* <PrivateRoute exact path="/league/:id">
+          <Redirect to={`/league`} />
+        </PrivateRoute> */}
+
         <PrivateRoute exact path="/league">
           <Redirect to={`/league/${defaultLeagueId}/${defaultSeason}`} />
         </PrivateRoute>

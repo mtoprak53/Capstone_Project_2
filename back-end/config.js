@@ -17,7 +17,7 @@ function getDatabaseUri() {
 }
 
 // Speed up bcrypt during test, since the algorithm safety isn't being tested
-// WJB: Evaluate in 2021 if this should be increased to 13 for non-test use
+// Evaluate later if this should be increased for non-test use
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
 if (process.env.NODE_ENV !== "test" &&
