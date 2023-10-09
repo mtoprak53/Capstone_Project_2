@@ -1,5 +1,16 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# mine
+/TODOS.txt
+/src/__jsons
+/src/__obsolete
+/src/__old_220717
+/src/__snapshots__
+/src/_data
+/src/_images
+/src/items/maybe
+/src/hooks/not
+
 # dependencies
 /node_modules
 /.pnp

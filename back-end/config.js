@@ -21,7 +21,7 @@ function getDatabaseUri() {
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
 if (process.env.NODE_ENV !== "test" &&
-    process.env.NODE_ENV !== "other") {
+    process.env.NODE_ENV !== "other") {    // ??? 
   // console.log();
   console.log(getDatabaseUri());
   console.log(process.env.NODE_ENV);
