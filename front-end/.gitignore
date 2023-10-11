@@ -6,7 +6,10 @@
 /src/__obsolete
 /src/__old_220717
 /src/__snapshots__
+
+# API credentials
 /src/_data
+
 /src/_images
 /src/items/maybe
 /src/hooks/not
