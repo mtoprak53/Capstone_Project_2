@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 import headers from "../_data/headers.json";
-import LoadingSpinner from "../common/LoadingSpinner.js"
+import LoadingSpinner from "../common/LoadingSpinner"
 import ErrorPage from "../common/ErrorPage";
 import CompetitionForm from "./CompetitionForm";
 import League from "./League";

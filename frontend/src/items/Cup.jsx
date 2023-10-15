@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import headers from "../_data/headers.json";
 import FavoriteHandler from "./FavoriteHandler";
-import LoadingSpinner from "../common/LoadingSpinner.js"
+import LoadingSpinner from "../common/LoadingSpinner"
 import ErrorPage from "../common/ErrorPage";
 import ls from "localstorage-ttl";
 import Heading from "./Heading";
