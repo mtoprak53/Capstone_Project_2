@@ -10,8 +10,6 @@ import jwt from "jsonwebtoken";
 // import { set } from "localstorage-ttl";
 // import { NavigationContainer } from '@react-navigation/native';
 
-// import "./App.css";
-
 // Key name for storing token in localStorage for "remember me" re-login
 export const TOKEN_STORAGE_ID = "footy-token";
 

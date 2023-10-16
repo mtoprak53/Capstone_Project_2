@@ -10,16 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "axios": "^1.5.1",
     "bootstrap": "^5.3.2",
-    "buffer": "^6.0.3",
-    "jsonwebtoken": "^9.0.2",
+    "jose": "^4.15.4",
     "localstorage-ttl": "^1.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^5.3.4"
+    "react-router-dom": "^6.16.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
