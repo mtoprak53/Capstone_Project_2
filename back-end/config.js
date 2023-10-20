@@ -2,10 +2,18 @@
 
 /** Shared config for application; can be required many places. */
 
+const jose = require("jose");  // new
+
 require("dotenv").config();
 require("colors");
 
-const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
+console.log("THIS IS config.js !!");
+
+const secret = new TextEncoder().encode(
+  "Swe4g7c?UBm5Nrd96vhsVDtkyJFbqKMTm!TMw5BDRLtaCFAXNvbq?s4rGKQSZnUP"
+);
+
+const SECRET_KEY = process.env.SECRET_KEY || secret;
 
 const PORT = +process.env.PORT || 3001;
 

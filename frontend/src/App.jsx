@@ -6,7 +6,13 @@ import Routes from "./routes-nav/Routes";
 import LoadingSpinner from "./common/LoadingSpinner";
 import FootyApi from "./api/api";
 import UserContext from "./auth/userContext";
-import jwt from "jsonwebtoken";
+
+
+// import jwt from "jsonwebtoken";  // old
+
+import * as jose from 'jose'  //new 
+
+
 // import { set } from "localstorage-ttl";
 // import { NavigationContainer } from '@react-navigation/native';
 
@@ -30,7 +36,13 @@ function App() {
       "infoLoaded=", infoLoaded,
       "currentUser=", currentUser,
       "token=", token,
+      "jose=", jose,
   );
+
+  console.log("##################################################");
+  console.log("jose=");
+  console.log(jose);
+  console.log("##################################################");
 
 
   useEffect(function mountStuff() {
@@ -59,7 +71,16 @@ function App() {
     async function getCurrentUser() {
       if (token) {
         try {
-          let { username } = jwt.decode(token);
+
+          // let { username } = jwt.decode(token);  // old
+
+          let protectedHeader = jose.decodeProtectedHeader(token);  // new
+
+          let { username } = jose.decodeProtectedHeader(token);  // new
+
+          // console.log(protectedHeader);
+          console.log(username);
+
           // put the token on the Api class so it can use it to call the API.
           FootyApi.token = token;
           let currentUser = await FootyApi.getCurrentUser(username);

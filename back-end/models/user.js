@@ -79,7 +79,7 @@ class User {
         [continent, city]
     );
     const timezone = resTz.rows[0].code;
-    // console.log("timezone", timezone);
+    console.log("timezone", timezone);
 
     // const timezone = `${continent}/${city}`
 

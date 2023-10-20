@@ -7,11 +7,18 @@ const cors = require("cors");
 
 const { NotFoundError } = require("./expressError");
 
+console.log("In app line 10 !!");
+
 const { authenticateJWT } = require("./middleware/auth");
+
+console.log("In app line 14 !!");
+
 const authRoutes = require("./routes/auth");
 const usersRoutes = require("./routes/users");
 const favoritesRoutes = require("./routes/favorites");
 const localsRoutes = require("./routes/locals");
+
+console.log("In app line 21 !!");
 
 const morgan = require("morgan");
 
@@ -38,19 +45,22 @@ app.use(function (err, req, res, next) {
   // if (process.env.NODE_ENV !== "test" &&
   //     process.env.NODE_ENV !== "other") {
   if (err.stack &&
-      process.env.NODE_ENV !== "test" &&
-      // process.env.NODE_ENV !== "" &&
-      process.env.NODE_ENV !== "other") {
-    console.log(process.env.NODE_ENV);
-    // console.log(NotFoundError());
-    console.error(err.stack);
+    process.env.NODE_ENV !== "test" &&
+    // process.env.NODE_ENV !== "" &&
+    process.env.NODE_ENV !== "other") {
+      console.log(process.env.NODE_ENV);
+      // console.log(NotFoundError());
+      console.error(err.stack);
   }
   const status = err.status || 500;
   const message = err.message;
-
+  
   return res.status(status).json({
     error: { message, status },
   });
 });
+  
+console.log("In app line 63 !!");
 
 module.exports = app;
+    

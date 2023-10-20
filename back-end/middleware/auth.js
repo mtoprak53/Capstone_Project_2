@@ -2,7 +2,9 @@
 
 /** Convenience middleware to handle common auth cases in routes. */
 
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");  // old
+const jose = require("jose");  // new
+
 const { SECRET_KEY } = require("../config");
 const { UnauthorizedError } = require("../expressError");
 
@@ -15,12 +17,48 @@ const { UnauthorizedError } = require("../expressError");
  *  It's not an error if no token was provided or if the token is not valid.
 */
 
-function authenticateJWT(req, res, next) {
+async function authenticateJWT(req, res, next) {
+  console.log("THIS IS /middleware/auth/authenticateJWT !!");
+  // console.log("#############################################");
+  // console.log(req.url);
+  // console.log("#############################################");
+  // console.log(req.statusCode);
+  // console.log("#############################################");
+  // // console.log(req.client);
+  // console.log(req.baseUrl);
+  // console.log("#############################################");
+  // console.log(req.query);
+  // console.log("#############################################");
+  // console.log(req.body);
+  // console.log("#############################################");
+  // console.log(req.params);
+  // console.log("#############################################");
+  // console.log(req.res);
+  // console.log(req.rawHeaders);
+  // console.log("req.headers");
+  // console.log(req.headers);
+  // console.log(req);
+  // console.log(Object.keys(req));
+
   try {
     const authHeader = req.headers && req.headers.authorization;
     if (authHeader) {
+
+      // console.log("authHeader");
+      // console.log(authHeader);
+      
       const token = authHeader.replace(/^[Bb]earer/, "").trim();
-      res.locals.user = jwt.verify(token, SECRET_KEY);
+      // console.log("token");
+      // console.log(token);
+
+      const { payload, protectedHeader } = await jose.jwtVerify(token, SECRET_KEY);
+
+      // console.log(protectedHeader)
+      // console.log(payload)
+
+      res.locals.user = protectedHeader;
+
+      // res.locals.user = jose.jwtVerify(token, SECRET_KEY);
     }
     return next();
   } catch (err) {
@@ -65,8 +103,12 @@ function ensureAdmin(req, res, next) {
  */
 
 function ensureCorrectUserOrAdmin(req, res, next) {
+  console.log("ensureCorrectUserOrAdmin");
+
   try {
     const user = res.locals.user;
+    // console.log("user");
+    // console.log(user);
     if (!(user && (user.isAdmin || user.username === req.params.username))) {
       throw new UnauthorizedError();
     }
