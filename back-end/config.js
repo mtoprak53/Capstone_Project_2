@@ -7,7 +7,9 @@ const jose = require("jose");  // new
 require("dotenv").config();
 require("colors");
 
-console.log("THIS IS config.js !!");
+// console.log("THIS IS config.js !!");
+
+const ALG_TYPE = 'HS256';
 
 const secret = new TextEncoder().encode(
   "Swe4g7c?UBm5Nrd96vhsVDtkyJFbqKMTm!TMw5BDRLtaCFAXNvbq?s4rGKQSZnUP"
@@ -45,6 +47,7 @@ if (process.env.NODE_ENV !== "test" &&
 }
 
 module.exports = {
+  ALG_TYPE,
   SECRET_KEY,
   PORT,
   BCRYPT_WORK_FACTOR,

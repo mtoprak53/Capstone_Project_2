@@ -18,7 +18,7 @@ const router = new express.Router();
  */
 
 router.post("/team", ensureLoggedIn, async function (req, res, next) {
-  console.log(`GET locals/team/:id`);
+  // console.log(`GET locals/team/:id`);
   try {
     const validator = jsonschema.validate(req.body, teamNewSchema);
     if (!validator.valid) {

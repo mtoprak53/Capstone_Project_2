@@ -2,12 +2,13 @@
 const jose = require("jose");  // new
 // import jose;
 
-const { SECRET_KEY } = require("../config");
+const { ALG_TYPE, SECRET_KEY } = require("../config");
 
 /** return signed JWT from user data. */
 
 async function createToken(user) {
-  console.assert(user.isAdmin !== undefined, 
+  console.assert(user.isAdmin !== undefined
+                  || process.env.NODE_ENV === "test", 
       "createToken passed user without isAdmin property");
 
   let userInfo = {
@@ -17,7 +18,7 @@ async function createToken(user) {
   };
 
   const jwt = await new jose.SignJWT({ 'urn:example:claim': true })
-    .setProtectedHeader({ alg: 'HS256', ...userInfo })
+    .setProtectedHeader({ alg: ALG_TYPE, ...userInfo })
     // .setIssuedAt()
     // .setIssuer('urn:example:issuer')
     // .setAudience('urn:example:audience')

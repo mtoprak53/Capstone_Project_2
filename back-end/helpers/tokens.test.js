@@ -1,34 +1,37 @@
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");  // old
+const jose = require("jose");  // new
+
 const { createToken } = require("./tokens");
-const { SECRET_KEY } = require("../config");
+const { ALG_TYPE, SECRET_KEY } = require("../config");
+
 
 describe("createToken", function () {
-  test("works: not admin", function () {
-    const token = createToken({ username: "test", is_admin: false });
-    const payload = jwt.verify(token, SECRET_KEY);
-    expect(payload).toEqual({
-      iat: expect.any(Number), 
+  test("works: not admin", async function () {
+    const token = await createToken({ username: "test", is_admin: false });
+    const { payload, protectedHeader } = await jose.jwtVerify(token, SECRET_KEY);
+    expect(protectedHeader).toEqual({
+      alg: ALG_TYPE, 
       username: "test", 
       isAdmin: false, 
     });
   });
 
-  test("works: admin", function () {
-    const token = createToken({ username: "test", isAdmin: true });
-    const payload = jwt.verify(token, SECRET_KEY);
-    expect(payload).toEqual({
-      iat: expect.any(Number), 
+  test("works: admin", async function () {
+    const token = await createToken({ username: "test", isAdmin: true });
+    const { payload, protectedHeader } = await jose.jwtVerify(token, SECRET_KEY);
+    expect(protectedHeader).toEqual({
+      alg: ALG_TYPE, 
       username: "test", 
       isAdmin: true,
     });
   });
 
-  test("works: default no admin", function () {
+  test("works: default no admin", async function () {
     // given the security risk if this didn't work, checking this specifically
-    const token = createToken({ username: "test" });
-    const payload = jwt.verify(token, SECRET_KEY);
-    expect(payload).toEqual({
-      iat: expect.any(Number), 
+    const token = await createToken({ username: "test" });
+    const { payload, protectedHeader } = await jose.jwtVerify(token, SECRET_KEY);
+    expect(protectedHeader).toEqual({
+      alg: ALG_TYPE, 
       username: "test", 
       isAdmin: false, 
     });

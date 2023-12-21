@@ -18,27 +18,7 @@ const { UnauthorizedError } = require("../expressError");
 */
 
 async function authenticateJWT(req, res, next) {
-  console.log("THIS IS /middleware/auth/authenticateJWT !!");
-  // console.log("#############################################");
-  // console.log(req.url);
-  // console.log("#############################################");
-  // console.log(req.statusCode);
-  // console.log("#############################################");
-  // // console.log(req.client);
-  // console.log(req.baseUrl);
-  // console.log("#############################################");
-  // console.log(req.query);
-  // console.log("#############################################");
-  // console.log(req.body);
-  // console.log("#############################################");
-  // console.log(req.params);
-  // console.log("#############################################");
-  // console.log(req.res);
-  // console.log(req.rawHeaders);
-  // console.log("req.headers");
-  // console.log(req.headers);
-  // console.log(req);
-  // console.log(Object.keys(req));
+  // console.log("THIS IS /middleware/auth/authenticateJWT !!");
 
   try {
     const authHeader = req.headers && req.headers.authorization;
@@ -55,6 +35,8 @@ async function authenticateJWT(req, res, next) {
 
       // console.log(protectedHeader)
       // console.log(payload)
+      // console.log(protectedHeader.username)
+      // console.log(protectedHeader.isAdmin)
 
       res.locals.user = protectedHeader;
 
@@ -87,7 +69,10 @@ function ensureLoggedIn(req, res, next) {
 
 function ensureAdmin(req, res, next) {
   try {
-    if (!res.locals.user || !res.locals.user.isAdmin) {
+    const user = res.locals.user;
+    // console.log("user");
+    // console.log(user);
+    if (!(user && user.isAdmin)) {
       throw new UnauthorizedError();
     }
     return next();
@@ -103,7 +88,7 @@ function ensureAdmin(req, res, next) {
  */
 
 function ensureCorrectUserOrAdmin(req, res, next) {
-  console.log("ensureCorrectUserOrAdmin");
+  // console.log("ensureCorrectUserOrAdmin");
 
   try {
     const user = res.locals.user;
