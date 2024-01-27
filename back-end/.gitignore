@@ -2,4 +2,6 @@
 /_database
 /_sample_responses
 /_sqlBuilders
+
+.env
 /node_modules

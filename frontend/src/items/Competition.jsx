@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useLocation, useHistory } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import headers from "../_data/headers.json";
 import LoadingSpinner from "../common/LoadingSpinner"
@@ -32,7 +32,7 @@ const Competition = ({ type }) => {
   //     (type === "cup" && defaultCupId);
   // season = season || defaultSeason;
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const location = useLocation();
   console.log(location);
@@ -337,7 +337,7 @@ const Competition = ({ type }) => {
       newId = newId || id;
       newSeason = newSeason || defaultSeason;
       name === "season" ? newType = type : newType = name  
-      history.push(`/${newType}/${newId}/${newSeason}`);
+      navigate.push(`/${newType}/${newId}/${newSeason}`);
     }
 
     console.log({ name, value });

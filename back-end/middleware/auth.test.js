@@ -1,6 +1,8 @@
 "use strict";
 
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");  // old
+const jose = require("jose");  // new
+
 const { UnauthorizedError } = require("../expressError");
 const {
   authenticateJWT,
@@ -10,13 +12,38 @@ const {
 } = require("./auth");
 
 
-const { SECRET_KEY } = require("../config");
-const testJwt = jwt.sign({ username: "test", isAdmin: false }, SECRET_KEY);
-const badJwt = jwt.sign({ username: "test", isAdmin: false }, "wrong");
+const { ALG_TYPE, SECRET_KEY } = require("../config");
+// const testJwt = jwt.sign({ username: "test", isAdmin: false }, SECRET_KEY);
+// const badJwt = jwt.sign({ username: "test", isAdmin: false }, "wrong");
+
+const wrongSecret = new TextEncoder().encode(
+  "Swe4g7c?UBm5Nrd96vhsVDtkyJFbqKMTm!TMw5BDRLtaCFAXNvbq?s4rGKQSZnUZ"
+);
+
+let testJwt, badJwt;
+async function generateTokens() {
+  try {
+    [testJwt, badJwt] = await Promise.all([
+      new jose.SignJWT({ 'urn:example:claim': true })
+        .setProtectedHeader({ alg: ALG_TYPE, username: "test", isAdmin: false })
+        .sign(SECRET_KEY),
+      new jose.SignJWT({ 'urn:example:claim': true })
+        .setProtectedHeader({ alg: ALG_TYPE, username: "test", isAdmin: false })
+        .sign(wrongSecret),
+    ]);
+  } catch (error) {
+    console.error("Error creating tokens:", error);
+  }
+  // console.log("testJwt");
+  // console.log(testJwt);
+  // console.log("badJwt");
+  // console.log(badJwt);
+}
+generateTokens();
 
 
 describe("authenticateJWT", function () {
-  test("works: via header", function () {
+  test("works: via header", async function () {
     expect.assertions(2);
     //there are multiple ways to pass an authorization token, this is how you pass it in the header.
     //this has been provided to show you another way to pass the token. you are only expected to read this code for this project.
@@ -25,10 +52,10 @@ describe("authenticateJWT", function () {
     const next = function (err) {
       expect(err).toBeFalsy();
     };
-    authenticateJWT(req, res, next);
+    await authenticateJWT(req, res, next);
     expect(res.locals).toEqual({
       user: {
-        iat: expect.any(Number),
+        alg: ALG_TYPE,
         username: "test",
         isAdmin: false,
       },

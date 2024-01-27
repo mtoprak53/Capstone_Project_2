@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";  // old
+import { useNavigate } from "react-router-dom";  // new
 import Alert from "../common/Alert";
 import FootyApi from "../api/api";
 
@@ -15,7 +16,7 @@ import FootyApi from "../api/api";
  */
 
 function SignupForm({ signup }) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -42,7 +43,7 @@ function SignupForm({ signup }) {
     evt.preventDefault();
     let result = await signup(formData);
     if (result.success) {
-      history.push("/");
+      navigate("/");
     } else {
       setFormErrors(result.errors);
     }

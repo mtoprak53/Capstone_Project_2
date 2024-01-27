@@ -11,14 +11,15 @@ const { BadRequestError } = require("../expressError");
 const router = new express.Router();
 
 
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
- * *
- * Authorization required: none
+/** POST /team  { id, name, code, country, founded, national, logoUrl, venueId } 
+ * 
+ *           => { id, name, code, country, founded, national, logoUrl, venueId }
+ * 
+ * Authorization required: user
  */
 
 router.post("/team", ensureLoggedIn, async function (req, res, next) {
-  console.log(`GET locals/team/:id`);
+  // console.log(`GET locals/team/:id`);
   try {
     const validator = jsonschema.validate(req.body, teamNewSchema);
     if (!validator.valid) {
@@ -34,42 +35,8 @@ router.post("/team", ensureLoggedIn, async function (req, res, next) {
 });
 
 
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
- * *
- * Authorization required: none
- */
-
-router.get("/timezones/:continent", async function (req, res, next) {
-  console.log(`GET locals/timezones/:continent`);
-  try {
-    const cities = await Local.findCities(req.params.continent);
-    return res.json({ cities });
-  } catch (err) {
-    return next(err);
-  }
-});
-
-
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
- * *
- * Authorization required: none
- */
-
-router.get("/countries", async function (req, res, next) {
-  console.log(`GET locals/countries`);
-  try {
-    const countries = await Local.getLeagueCountries();
-    return res.json(countries);
-  } catch (err) {
-    return next(err);
-  }
-});
-
-
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
+// TODO: return format change -> { team: { id, name } }
+/** GET /team/[id]  => { id, name }
  * *
  * Authorization required: none
  */
@@ -85,8 +52,42 @@ router.get("/team/:id", async function (req, res, next) {
 });
 
 
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
+/** GET /timezones/[continent]  => { cities: [ { city }, ... ] }
+ * *
+ * Authorization required: none
+ */
+
+router.get("/timezones/:continent", async function (req, res, next) {
+  console.log(`GET locals/timezones/:continent`);
+  try {
+    const cities = await Local.findCities(req.params.continent);
+    return res.json({ cities });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+// TODO: return format change
+/** GET /countries  => { countries: [ { country }, ... ] }
+ * *
+ * Authorization required: none
+ */
+
+router.get("/countries", async function (req, res, next) {
+  console.log(`GET locals/countries`);
+  try {
+    const countries = await Local.getLeagueCountries();
+    return res.json(countries);
+  } catch (err) {
+    return next(err);
+  }
+});
+
+
+// TODO: logo_url -> logoUrl
+//       return format change
+/** GET /leagues/[country]  => { leagues: [ { id, name, logoUrl, type }, ... ] }
  * *
  * Authorization required: none
  */
@@ -101,9 +102,8 @@ router.get("/leagues/:country", async function (req, res, next) {
   }
 });
 
-
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
+ // TODO: logo_url -> logoUrl
+/** GET /cups/[id]  => { name, logoUrl, country }
  * *
  * Authorization required: none
  */

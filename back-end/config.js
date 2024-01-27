@@ -2,10 +2,20 @@
 
 /** Shared config for application; can be required many places. */
 
+const jose = require("jose");  // new
+
 require("dotenv").config();
 require("colors");
 
-const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
+// console.log("THIS IS config.js !!");
+
+const ALG_TYPE = 'HS256';
+
+const secret = new TextEncoder().encode(
+  "Swe4g7c?UBm5Nrd96vhsVDtkyJFbqKMTm!TMw5BDRLtaCFAXNvbq?s4rGKQSZnUP"
+);
+
+const SECRET_KEY = process.env.SECRET_KEY || secret;
 
 const PORT = +process.env.PORT || 3001;
 
@@ -37,6 +47,7 @@ if (process.env.NODE_ENV !== "test" &&
 }
 
 module.exports = {
+  ALG_TYPE,
   SECRET_KEY,
   PORT,
   BCRYPT_WORK_FACTOR,

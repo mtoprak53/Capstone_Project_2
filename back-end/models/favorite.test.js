@@ -1,10 +1,5 @@
 "use strict";
 
-// const {
-//   NotFoundError,
-//   BadRequestError,
-//   UnauthorizedError,
-// } = require("../expressError");
 const db = require("../db.js");
 const Favorite = require("./favorite.js");
 const {

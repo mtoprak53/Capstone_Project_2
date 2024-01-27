@@ -30,7 +30,7 @@ router.post("/token", async function (req, res, next) {
 
     const { username, password } = req.body;
     const user = await User.authenticate(username, password);
-    const token = createToken(user);
+    const token = await createToken(user);
     return res.json({ token });
   } catch (err) {
     return next(err);
@@ -40,7 +40,7 @@ router.post("/token", async function (req, res, next) {
 
 /** POST /auth/register:   { user } => { token }
  *
- * user must include { username, password, email, timezone }
+ * user must include { username, password, email, continent, city }
  *
  * Returns JWT token which can be used to authenticate further requests.
  *
@@ -56,8 +56,11 @@ router.post("/register", async function (req, res, next) {
       throw new BadRequestError(errs);
     }
 
+    // console.log("/routes/auth/register => req.body");
+    // console.log(req.body);
+
     const newUser = await User.register({ ...req.body, isAdmin: false });
-    const token = createToken(newUser);
+    const token = await createToken(newUser);
     return res.status(201).json({ token });
   } catch (err) {
     return next(err);

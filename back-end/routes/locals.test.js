@@ -9,10 +9,13 @@ const {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
-  // testJobIds,
-  u1Token,
-  adminToken,
+  generateTokens,
 } = require("./_testCommon");
+
+let u1Token, u2Token, adminToken;
+(async function () {
+  ({ u1Token, u2Token, adminToken } = await generateTokens())
+})();
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);

@@ -3,10 +3,7 @@
 const db = require("../db.js");
 const User = require("../models/user");
 const Local = require("../models/local");
-// const Job = require("../models/job");
 const { createToken } = require("../helpers/tokens");
-
-// const testJobIds = [];
 
 async function commonBeforeAll() {
   // noinspection SqlWithoutWhere
@@ -118,9 +115,27 @@ async function commonAfterAll() {
 }
 
 
-const u1Token = createToken({ username: "u1", isAdmin: false });
-const u2Token = createToken({ username: "u2", isAdmin: false });
-const adminToken = createToken({ username: "admin", isAdmin: true });
+/* AI CODE STARTS */
+
+async function generateTokens() {
+  let u1Token, u2Token, adminToken;
+  try {
+    [u1Token, u2Token, adminToken] = await Promise.all([
+      createToken({ username: "u1", isAdmin: false }),
+      createToken({ username: "u2", isAdmin: false }),
+      createToken({ username: "admin", isAdmin: true }),
+    ]);
+    // Tokens are assigned to global variables
+  } catch (error) {
+    console.error("Error creating tokens:", error);
+    // Handle the error appropriately
+  }
+  // console.log("adminToken in _testCommon");
+  // console.log(adminToken);
+  return { u1Token, u2Token, adminToken }
+}
+
+/* AI CODE ENDS */
 
 
 module.exports = {
@@ -128,8 +143,5 @@ module.exports = {
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
-  // testJobIds,
-  u1Token,
-  u2Token,
-  adminToken,
+  generateTokens,
 };

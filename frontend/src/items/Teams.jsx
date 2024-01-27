@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Heading from "./Heading";
 import TeamForm from "./TeamForm";
@@ -25,7 +25,7 @@ const Teams = () => {
   const { countries } = useContext(UserContext);
   // let { team_name } = useParams();
   let { teamId } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // team_name = team_name || defaultTeam;
   // teamId = teamId || defaultTeamId;
@@ -222,7 +222,7 @@ const Teams = () => {
     axiosData();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [history.location.pathname]);
+  }, [navigate.location.pathname]);
 
 
   /**   HANDLE CHANGE   */
@@ -271,7 +271,7 @@ const Teams = () => {
         teamId: value
       }));
 
-      history.push(`/teams/${value}`);
+      navigate.push(`/teams/${value}`);
     }
 
     console.log({ name, value });

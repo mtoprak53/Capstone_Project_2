@@ -1,18 +1,19 @@
 "use strict";
 
 const request = require("supertest");
-
 const app = require("../app");
-
 const {
   commonBeforeAll,
   commonBeforeEach,
   commonAfterEach,
   commonAfterAll,
-  // testJobIds,
-  u1Token,
-  adminToken,
+  generateTokens,
 } = require("./_testCommon");
+
+let u1Token, u2Token, adminToken;
+(async function () {
+  ({ u1Token, u2Token, adminToken } = await generateTokens())
+})();
 
 beforeAll(commonBeforeAll);
 beforeEach(commonBeforeEach);
@@ -21,16 +22,23 @@ afterAll(commonAfterAll);
 
 /************************************** POST /companies */
 
+
 describe("POST /favorites/:username", function () {
-  const newCompany = {
-    handle: "new",
-    name: "New",
-    logoUrl: "http://new.img",
-    description: "DescNew",
-    numEmployees: 10,
-  };
+  // const newCompany = {
+  //   handle: "new",
+  //   name: "New",
+  //   logoUrl: "http://new.img",
+  //   description: "DescNew",
+  //   numEmployees: 10,
+  // };
+
+  // console.log("adminToken in favorites.test.js");
+  // console.log(adminToken);
 
   test("ok for league for admin", async function () {
+
+    // console.log("adminToken in 1st test of favorites.test.js");
+    // console.log(!!adminToken);
     const resp = await request(app)
         .post("/favorites/u1")
         .send({ type: "league", favorite_id: 203 })

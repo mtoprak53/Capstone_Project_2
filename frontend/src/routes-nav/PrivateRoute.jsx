@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
 import UserContext from "../auth/userContext";
 
 /** "Higher-Order Component" for private routes. 
@@ -20,13 +20,11 @@ function PrivateRoute({ exact, path, children }) {
   );
 
   if (!currentUser) {
-    return <Redirect to="/login" />;
+    return <Route exact element={<Navigate to="/login" />} />;
   }
 
   return (
-      <Route exact={exact} path={path}>
-        {children}
-      </Route>
+    <Route path={path} element={children} />
   );
 }
 

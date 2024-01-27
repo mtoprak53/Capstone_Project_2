@@ -1,6 +1,6 @@
 import React from "react";
 // import { React, useContext } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
@@ -30,86 +30,48 @@ import {
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function MyRoutes({ login, signup }) {
   console.debug(
-      "Routes",
+      "MyRoutes",
       `login=${typeof login}`,
       `register=${typeof register}`,
   );
-    
+  // element={} /
   return (
     <div className="pt-5">
-      <Switch>
-
-        {/* <AnonymousRoute exact path="/"> */}
-        <Route exact path="/">
-          <Homepage />
-        </Route>
-        {/* </AnonymousRoute> */}
-
-        {/* <AnonymousRoute exact path="/login"> */}
-        <Route exact path="/login">
-          <LoginForm login={login} />
-        </Route>
-        {/* </AnonymousRoute> */}
-
-        {/* <AnonymousRoute exact path="/signup"> */}
-        <Route exact path="/signup">
-          <SignupForm signup={signup} />
-        </Route>
-        {/* </AnonymousRoute> */}
+      <Routes>
+        <Route exact path="/" element={<Homepage />} />
+        <Route exact path="/login" element={<LoginForm login={login} />} />
+        <Route exact path="/signup" element={<SignupForm signup={signup} />} />
         
+        <Route exact path="/teams/:teamId" element={<PrivateRoute />}>
+          <Route exact element={<Teams />} />
+        </Route>
 
-        {/* <PrivateRoute exact path="/">
-          <Home />
-        </PrivateRoute> */}
+        <Route exact path="/teams" element={<PrivateRoute />}>
+          <Route exact element={<Navigate to={`/teams/${defaultTeamId}`} />} />
+        </Route>
 
-        {/* <PrivateRoute exact path="/teams/:team_name"> */}
-        <PrivateRoute exact path="/teams/:teamId">
-          <Teams />
-        </PrivateRoute>
+        <Route exact path="/league/:id/:season" element={<PrivateRoute />}>
+          <Route exact element={<Competition type="league" />} />
+        </Route>
 
-        <PrivateRoute exact path="/teams">
-          <Redirect to={`/teams/${defaultTeamId}`} />
-        </PrivateRoute>
+        <Route exact path="/league" element={<PrivateRoute />}>
+          <Route exact element={<Navigate to={`/league/${defaultLeagueId}/${defaultSeason}`} />} />
+        </Route>
 
-        {/* <PrivateRoute exact path="/:type/:id/:season">
-          <Competition />
-        </PrivateRoute> */}
+        <Route exact path="cup/:id/:season" element={<PrivateRoute />}>
+          <Route exact element={<Competition type="cup" />} />
+        </Route>
 
-        <PrivateRoute exact path="/league/:id/:season">
-          <Competition type="league" />
-        </PrivateRoute>
+        <Route exact path="/cup" element={<PrivateRoute />}>
+          <Route exact element={<Navigate to={`/cup/${defaultCupId}/${defaultSeason}`} />} />
+        </Route>
 
-        {/* <PrivateRoute exact path="/league/:id">
-          <Redirect to={`/league`} />
-        </PrivateRoute> */}
-
-        <PrivateRoute exact path="/league">
-          <Redirect to={`/league/${defaultLeagueId}/${defaultSeason}`} />
-        </PrivateRoute>
-
-        <PrivateRoute exact path="/cup/:id/:season">
-          <Competition type="cup" />
-        </PrivateRoute>
-
-        <PrivateRoute exact path="/cup">
-          <Redirect to={`/cup/${defaultCupId}/${defaultSeason}`} />
-        </PrivateRoute>
-
-        {/* <PrivateRoute exact path="/league"> */}
-        {/* <PrivateRoute exact path="/:type">
-          <ErrorPage message="This is not a legit route address!!"/>
-        </PrivateRoute> */}
-
-        {/* <PrivateRoute exact path="/cup">
-          <Competition />
-        </PrivateRoute> */}
-
-        <Redirect to="/" />
-      </Switch>
+        <Route exact element={<Navigate to="/" />} />
+      </Routes>
     </div>
   );
 }
 
-export default Routes;
+export default MyRoutes;
