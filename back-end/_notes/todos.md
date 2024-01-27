@@ -4,6 +4,10 @@ TO RUN BACKEND IN DESKTOP LOCALLY:
 ----------------------------------
 PGPASSWORD=mete1234 npm run dev
 
+- OR -
+
+put "PGPASSWORD=mete1234" in .env file in backend folder without quotes
+
 
 ROUTES:
 -------
@@ -21,9 +25,9 @@ GET   - /favorites/:username/:type
 DELETE- /favorites/:username/:type/:favorite_id
 --------------------------
 POST  - /locals/team
+GET   - /locals/team/:id
 GET   - /locals/timezones/:continent
 GET   - /locals/countries
-GET   - /locals/team/:id
 GET   - /locals/leagues/:country
 GET   - /locals/cups/:id
 --------------------------
@@ -47,23 +51,33 @@ config.test.js
 --------------------------
 
 
+DATABASE TABLES:
+----------------
+countries        (filled)
+favorite_cups    (empty)   
+favorite_leagues (empty)
+favorite_teams   (empty)
+leagues          (filled)
+leagues_seasons  (empty)
+teams            (empty)
+timezones        (filled)
+users            
+venues           (empty)
+
+
+
 NOTES:
 --------
+[SOLVED]
 12-20-23: In app.test.js if there is only one test it returns a DB error, but ifthere are two tests there is no error!
 
-
-
-
-
-
+[??]
 How to avoid Brute Force attacks for user passwords?
-
 
 
 11-04-23/Sat
 ------------
 1. Check how frontend and backend works?
-
 
 
 12-19-23/Tue
@@ -80,7 +94,10 @@ How to avoid Brute Force attacks for user passwords?
 
 
 
-
+> return of /locals/countires should be { countries: [ { country }, ... ] }
+> return of /locals/leagues/:country should be 
+    { leagues: [ { id, name, logoUrl, type }, ... ] }
+    
 
 
 

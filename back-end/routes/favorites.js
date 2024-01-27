@@ -17,10 +17,12 @@ const router = new express.Router();
 /** POST / { favorite } =>  { favorite }
  *
  * favorite should be { username, favorite_id, type }
+ * 
+ * type is either 'league', 'cup', or 'team'
  *
  * Returns { username, favorite_id, type }
  *
- * Authorization required: admin
+ * Authorization required: admin or same user-as-:username
  */
 
 router.post("/:username", ensureCorrectUserOrAdmin, async function (req, res, next) {
@@ -46,8 +48,10 @@ router.post("/:username", ensureCorrectUserOrAdmin, async function (req, res, ne
 
 /** GET /  =>
  *   { favorite: [ { username, favorite_id, type }, ...] }
+ * 
+ * type is either 'league', 'cup', or 'team'
  * *
- * Authorization required: none
+ * Authorization required: admin or same user-as-:username
  */
 
 router.get("/:username/:type", ensureCorrectUserOrAdmin, async function (req, res, next) {
@@ -64,8 +68,10 @@ router.get("/:username/:type", ensureCorrectUserOrAdmin, async function (req, re
 
 /** DELETE /[ { username, favorite_id, type } ]  =>  
  *            { deleted: { username, favorite_id, type } }
+ * 
+ * type is either 'league', 'cup', or 'team'
  *
- * Authorization: admin
+ * Authorization: admin or same user-as-:username
  */
 
 router.delete("/:username/:type/:favorite_id", ensureCorrectUserOrAdmin, async function (req, res, next) {

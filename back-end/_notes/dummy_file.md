@@ -1,7 +1,7 @@
 
 // ###################################################################
 
-UPDATE users SET is_admin = True WHERE username = 'momo';
+UPDATE users SET is_admin = True WHERE username = 'testuser';
 
 SELECT username, email, is_admin FROM users;
 
@@ -44,6 +44,95 @@ SELECT ft.username,
 
 // ###################################################################
 
+{
+	"username": "testuser",
+	"password": "password"
+}
+
+
+{
+	"username": "mete",
+	"password": "mete123"
+}
+
+{
+	"username": "papi",
+	"password": "papi123", 
+	"email": "papi@email.co",
+	"continent": "Europe",
+	"city": "Lisbon"
+}
+
+
+{
+	"email": "papi@email.co",
+	"timezone": "Europe/Warsaw"
+}
+
+
+{
+	"email": "zozo@email.co",
+	"timezone": "Europe/Frankfurt"
+}
+
+
+{
+  "username": "zozo",
+  "email": "papi@email.co",
+  "timezone": "Europe/Warsaw",
+  "isAdmin": false
+}
+
+{
+  "username": "zozo",
+	"password": "zozo123", 
+  "email": "zozo@email.co",
+	"continent": "Europe",
+	"city": "Helsinki"
+}
+
+
+
+// ###################################################################
+
+{
+  "favorite_id": "1",
+  "type": "league"
+}
+
+// ###################################################################
+
+/locals/team:
+
+{ 
+  "id": 1, 
+  "name": "BVB Dortmund", 
+  "code": "BVB", 
+  "country": "Germany", 
+  "founded": 1909, 
+  "national": false, 
+  "logoUrl": "https://www.bvb.de", 
+  "venueId": 1 
+}
+
+
+// ###################################################################
+
+
+
+// ###################################################################
+
+
+
+// ###################################################################
+
+
+
+// ###################################################################
+
+
+
+// ###################################################################
 
 
 {
