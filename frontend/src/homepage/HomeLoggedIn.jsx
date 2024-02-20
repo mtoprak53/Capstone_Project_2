@@ -21,7 +21,7 @@ function HomeLoggedIn({ user }) {
   
   return (
       <div className="HomeLoggedIn">
-        <h2>Welcome {user.username}</h2>
+        <h2>Hi {user.username}</h2>
 
         <div className="Favorites-Container mt-5">
 

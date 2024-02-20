@@ -1,0 +1,52 @@
+version: '3.8'    
+
+services:
+  postgres:
+    container_name: footy-database
+    image: postgres:latest
+    build:
+      context: .
+    environment:
+      POSTGRES_DB: footy
+      POSTGRES_USER: node
+      POSTGRES_PASSWORD: node123
+    volumes:
+      - ./db/scripts/:/docker-entrypoint-initdb.d
+
+  backend:
+    container_name: footy-backend
+    build:
+      context: ./backend
+    ports:
+      - "3001:3001"
+      # - "8081:3001"
+    depends_on:
+      - postgres
+    environment:
+      PGHOST: postgres
+      PGUSER: node
+      PGPASSWORD: node123
+      PGDATABASE: footy
+      PGPORT: 5432
+
+  frontend:
+    container_name: footy-frontend
+    build:
+      context: ./frontend
+    ports:
+      # - "3000:3000"
+      # - "8080:5173"
+      - "8080:8080"
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+
+  
