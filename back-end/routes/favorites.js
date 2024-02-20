@@ -6,7 +6,7 @@ const jsonschema = require("jsonschema");
 const express = require("express");
 
 const { BadRequestError } = require("../expressError");
-const { ensureLoggedIn, ensureCorrectUserOrAdmin } = require("../middleware/auth");
+const { ensureCorrectUserOrAdmin } = require("../middleware/auth");
 const Favorite = require("../models/favorite");
 
 const favoriteNewSchema = require("../schemas/favoriteNew.json");
@@ -14,14 +14,11 @@ const favoriteNewSchema = require("../schemas/favoriteNew.json");
 const router = new express.Router();
 
 
-/** POST / { favorite } =>  { favorite }
- *
- * favorite should be { username, favorite_id, type }
+// TODO: favorite_id -> favoriteId
+/** POST /[username] { favorite_id, type } =>  { favorite: { username, <type>Id } }
  * 
  * type is either 'league', 'cup', or 'team'
- *
- * Returns { username, favorite_id, type }
- *
+ * 
  * Authorization required: admin or same user-as-:username
  */
 
@@ -46,10 +43,11 @@ router.post("/:username", ensureCorrectUserOrAdmin, async function (req, res, ne
 });
 
 
-/** GET /  =>
- *   { favorite: [ { username, favorite_id, type }, ...] }
+/** GET /[username]/[type]  => { favorites }
  * 
  * type is either 'league', 'cup', or 'team'
+ * 
+ * Returns  { favorites: [ { username, id, name, country, logoUrl, flagUrl }, ... ] }
  * *
  * Authorization required: admin or same user-as-:username
  */
