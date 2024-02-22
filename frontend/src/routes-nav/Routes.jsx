@@ -44,29 +44,36 @@ function MyRoutes({ login, signup }) {
         <Route exact path="/login" element={<LoginForm login={login} />} />
         <Route exact path="/signup" element={<SignupForm signup={signup} />} />
         
-        <Route exact path="/teams/:teamId" element={<PrivateRoute />}>
-          <Route exact element={<Teams />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/teams/:teamId" element={<Teams />} />
+          {/* <Route path="/teams" element={<Navigate to={`/teams/${defaultTeamId}`} />} /> */}
+          <Route path="/teams" element={<Teams />} />
+          <Route path="/league/:id/:season" element={<Competition type="league" />} />
+          {/* <Route path="/league" element={<Navigate to={`/league/${defaultLeagueId}/${defaultSeason}`} />} /> */}
+          <Route path="/league" element={<Navigate to={`/league/${defaultLeagueId}/${defaultSeason}`} />} />
+          <Route path="cup/:id/:season" element={<Competition type="cup" />} />
+          <Route path="/cup" element={<Navigate to={`/cup/${defaultCupId}/${defaultSeason}`} />} />
+
+        </Route>
+
+
+        {/* <Route exact path="/teams/:teamId" element={<PrivateRoute />}>
         </Route>
 
         <Route exact path="/teams" element={<PrivateRoute />}>
-          <Route exact element={<Navigate to={`/teams/${defaultTeamId}`} />} />
         </Route>
 
         <Route exact path="/league/:id/:season" element={<PrivateRoute />}>
-          <Route exact element={<Competition type="league" />} />
         </Route>
 
         <Route exact path="/league" element={<PrivateRoute />}>
-          <Route exact element={<Navigate to={`/league/${defaultLeagueId}/${defaultSeason}`} />} />
         </Route>
 
         <Route exact path="cup/:id/:season" element={<PrivateRoute />}>
-          <Route exact element={<Competition type="cup" />} />
         </Route>
 
         <Route exact path="/cup" element={<PrivateRoute />}>
-          <Route exact element={<Navigate to={`/cup/${defaultCupId}/${defaultSeason}`} />} />
-        </Route>
+        </Route> */}
 
         <Route exact element={<Navigate to="/" />} />
       </Routes>

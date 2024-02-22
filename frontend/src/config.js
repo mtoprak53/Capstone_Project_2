@@ -1,3 +1,8 @@
+const headers = {
+  "X-RapidAPI-Key": import.meta.env.APIKEY,
+  "X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
+}
+
 const BASE_URL = "https://api-football-v1.p.rapidapi.com/v3/";
 
 const mainNations = [
@@ -25,7 +30,7 @@ const defaultTeam = "Trabzonspor";
 const defaultTeamId = 998;   // Trabzonspor (TR)
 const defaultLeagueId = 203;   // Turkish Süper Lig
 const defaultCupId = 206;   // Turkish Cup
-const defaultSeason = 2022;
+const defaultSeason = 2023;
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -38,7 +43,7 @@ const oneYearInMs = 86400000*365;
 
 
 export {
-  // headers, 
+  headers, 
   BASE_URL,
   mainNations, 
   mainNationsTeams, 

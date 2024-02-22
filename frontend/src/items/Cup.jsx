@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../auth/userContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import headers from "../_data/headers.json";
+// import headers from "../_data/headers.json";
 import FavoriteHandler from "./FavoriteHandler";
 import LoadingSpinner from "../common/LoadingSpinner"
 import ErrorPage from "../common/ErrorPage";
@@ -10,7 +10,10 @@ import ls from "localstorage-ttl";
 import Heading from "./Heading";
 import "./Cup.css";
 // import CupRound from "./maybe/CupRound";
-import { months } from "../config";
+import { 
+  headers, 
+  months 
+} from "../config";
 
 const Cup = (props) => {
   console.log("props");

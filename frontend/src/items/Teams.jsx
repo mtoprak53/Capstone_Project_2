@@ -8,6 +8,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ErrorPage from "../common/ErrorPage";
 import FootyApi from "../api/api";
 import {
+  headers,
   BASE_URL, 
   defaultVenueImage, 
   defaultCountry, 
@@ -16,7 +17,6 @@ import {
   defaultSeason, 
   oneMonthInMs 
 } from "../config";
-import headers from "../_data/headers.json";
 import UserContext from "../auth/userContext"
 import ls from "localstorage-ttl";
 import "./Teams.css";
@@ -25,6 +25,12 @@ const Teams = () => {
   const { countries } = useContext(UserContext);
   // let { team_name } = useParams();
   let { teamId } = useParams();
+
+  teamId = teamId || defaultTeamId;
+
+  console.log("teamId: ", teamId);
+
+
   const navigate = useNavigate();
 
   // team_name = team_name || defaultTeam;

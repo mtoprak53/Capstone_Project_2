@@ -101,7 +101,7 @@ How to avoid Brute Force attacks for user passwords?
 
 
 
-
+railway run psql < db/scripts/footy.sql
 
 
 
