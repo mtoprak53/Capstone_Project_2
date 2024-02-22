@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import headers from "../_data/headers.json";
+// import headers from "../_data/headers.json";
 import LoadingSpinner from "../common/LoadingSpinner"
 import ErrorPage from "../common/ErrorPage";
 import CompetitionForm from "./CompetitionForm";
@@ -12,6 +12,7 @@ import UserContext from "../auth/userContext"
 import ls from "localstorage-ttl";
 import "./Competition.css";
 import { 
+  headers,
   BASE_URL, 
   defaultCountry, 
   // defaultLeagueId, 
