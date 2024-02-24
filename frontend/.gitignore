@@ -26,3 +26,4 @@ dist-ssr
 # Mine
 # API Key   
 /src/_data
+.vercel
